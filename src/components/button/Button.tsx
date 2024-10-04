@@ -1,37 +1,43 @@
 import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
+import FeatherIcon from "feather-icons-react";
 
 export type ButtonProps = {
   text?: string;
   primary?: boolean;
-  disabled?: boolean;
+  icon?: string;
   size?: "small" | "medium" | "large";
   onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 const StyledButton = styled.button<ButtonProps>`
-  border: 0;
+  border: ${(props) => (props.primary ? "0" : "1px")};
+  border-color: ${(props) => (props.primary ? null : "#E6E6E6")};
+  border-style: solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
   line-height: 1;
-  font-size: 15px;
+  font-size: 16;
   cursor: pointer;
-  font-weight: 700;
-  font-weight: bold;
-  border-radius: 10px;
-  display: inline-block;
+  font-weight: 500;
+  font-weight: medium;
+  border-radius: 8px;
   color: ${(props) => (props.primary ? "#fff" : "#000")};
-  background-color: ${(props) => (props.primary ? "#FF5655" : "#f4c4c4")};
+  background-color: ${(props) => (props.primary ? "#ED8822" : "#FFFFFF")};
   padding: ${(props) =>
     props.size === "small"
-      ? "7px 25px 8px"
+      ? "6px 12px"
       : props.size === "medium"
-        ? "9px 30px 11px"
-        : "14px 30px 16px"};
+        ? "8px 24px"
+        : "16px 48px"};
 `;
 
 const Button: React.FC<ButtonProps> = ({
   size,
   primary,
-  disabled,
+  icon,
   text,
   onClick,
   ...props
@@ -41,10 +47,12 @@ const Button: React.FC<ButtonProps> = ({
       type="button"
       onClick={onClick}
       primary={primary}
-      disabled={disabled}
       size={size}
       {...props}
     >
+      {icon == null || icon == undefined ? null : (
+        <FeatherIcon icon={icon} size={16} />
+      )}
       {text}
     </StyledButton>
   );
