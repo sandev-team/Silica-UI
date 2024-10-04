@@ -24,5 +24,6 @@
   "include": ["src", "index.ts"], // Specifies the directory to include when searching for TypeScript files.
   "exclude": [
     "src/**/__docs__","src/**/__test__"
-  ]
+  ],
+  "types": ["node", "jest", "@testing-library/jest-dom"],
 }
