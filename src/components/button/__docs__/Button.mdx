@@ -24,14 +24,12 @@ import {Button} from "silica-ui";
   onClick={()=> console.log("Clicked")}
   primary
 />
-
-export default Example;
 ```
 
 #### Arguments
 
 - **text** _`() => void`_ - A string that represents the text content of the button.
-- **icon** _`() => void`_ - A string that represents the text icon name of Feather Icon.
+- **icon** _`() => void`_ - A string that represents the text icon name of Feather Icon(Can leave empty if don't want to use).
 - **primary** - A boolean indicating whether the button should have a primary styling or not. Typically, a primary button stands out as the main action in a user interface.
 - **disabled** - A boolean indicating whether the button should be disabled or not. When disabled, the button cannot be clicked or interacted with.
 - **size** - A string with one of three possible values: "small," "medium," or "large." It defines the size or dimensions of the button.

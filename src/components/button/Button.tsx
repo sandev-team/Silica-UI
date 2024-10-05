@@ -19,7 +19,12 @@ const StyledButton = styled.button<ButtonProps>`
   align-items: center;
   gap: 8px;
   line-height: 1;
-  font-size: 16;
+  font-size: ${(props) =>
+    props.size === "small"
+      ? "13.33px"
+      : props.size === "medium"
+        ? "16px"
+        : "19.2px"};
   cursor: pointer;
   font-weight: 500;
   font-weight: medium;
@@ -51,7 +56,10 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
     >
       {icon == null || icon == undefined ? null : (
-        <FeatherIcon icon={icon} size={16} />
+        <FeatherIcon
+          icon={icon}
+          size={size === "small" ? "16px" : size === "medium" ? "20px" : "24px"}
+        />
       )}
       {text}
     </StyledButton>
