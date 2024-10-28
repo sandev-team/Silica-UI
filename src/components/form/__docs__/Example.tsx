@@ -1,12 +1,11 @@
 import React, { FC } from "react";
-import Button, { ButtonProps } from "../Button";
+import Input, { InputProps } from "../Input";
 
-const Example: FC<ButtonProps> = ({
-  onClick = () => {},
-  primary = true,
-  size = "small",
-  icon = "plus",
-  text = "Button",
+const Example: FC<InputProps> = ({
+  value,
+  placeholder,
+  size,
+  onChange,
   className = "",
 }) => {
   return (
@@ -18,12 +17,11 @@ const Example: FC<ButtonProps> = ({
         height: "100%",
       }}
     >
-      <Button
+      <Input
+        value={value}
+        placeholder={placeholder}
         size={size}
-        text={text}
-        icon={icon}
-        onClick={onClick}
-        primary={primary}
+        onChange={onChange}
         className={className}
       />
     </div>

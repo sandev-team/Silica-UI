@@ -4,6 +4,7 @@ import Example from "./Example";
 const meta: Meta<typeof Example> = {
   title: "Button",
   component: Example,
+  tags: ["autodoc"],
 };
 
 export default meta;
