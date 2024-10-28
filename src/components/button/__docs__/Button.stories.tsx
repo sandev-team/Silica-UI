@@ -5,6 +5,11 @@ const meta: Meta<typeof Example> = {
   title: "Button",
   component: Example,
   tags: ["autodoc"],
+  parameters: {
+    docs: {
+      toc: true,
+    },
+  },
 };
 
 export default meta;
@@ -16,17 +21,18 @@ export const Primary: Story = {
     icon: "",
     primary: true,
     size: "small",
-    onClick: () => console.log("Button"),
+    justifyContent: "center",
+    onClick: () => console.log("Button clicked"),
   },
 };
 
-export const Primary_Icon: Story = {
+export const PrimaryWithIcon: Story = {
   args: {
     text: "New Draft",
     icon: "plus",
     primary: true,
     size: "small",
-    onClick: () => console.log("Button"),
+    onClick: () => console.log("Button clicked"),
   },
 };
 
@@ -36,16 +42,44 @@ export const Secondary: Story = {
     icon: "",
     primary: false,
     size: "small",
-    onClick: () => console.log("Button"),
+    onClick: () => console.log("Button clicked"),
   },
 };
 
-export const Secondary_Icon: Story = {
+export const SecondaryWithIcon: Story = {
   args: {
     text: "Copy",
     icon: "clipboard",
     primary: false,
     size: "small",
-    onClick: () => console.log("Button"),
+    onClick: () => console.log("Button clicked"),
+  },
+};
+
+export const FullSize: Story = {
+  args: {
+    text: "Full Width Button",
+    primary: true,
+    size: "full",
+    onClick: () => console.log("Full button clicked"),
+  },
+};
+
+export const Large: Story = {
+  args: {
+    text: "Large Button",
+    primary: true,
+    size: "large",
+    onClick: () => console.log("Large button clicked"),
+  },
+};
+
+export const CustomStyle: Story = {
+  args: {
+    text: "Styled Button",
+    className: "custom-button-class",
+    primary: false,
+    size: "medium",
+    onClick: () => console.log("Styled button clicked"),
   },
 };

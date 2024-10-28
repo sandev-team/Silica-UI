@@ -7,6 +7,7 @@ const Example: FC<ButtonProps> = ({
   size = "small",
   icon = "plus",
   text = "Button",
+  justifyContent = "center",
   className = "",
 }) => {
   return (
@@ -22,6 +23,7 @@ const Example: FC<ButtonProps> = ({
         size={size}
         text={text}
         icon={icon}
+        justifyContent={justifyContent}
         onClick={onClick}
         primary={primary}
         className={className}

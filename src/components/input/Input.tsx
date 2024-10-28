@@ -33,6 +33,7 @@ const StyledInput = styled.input<InputProps>`
     width: 100%;
     box-sizing: border-box;
     outline: none; // Remove the default outline
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; // Add transition for smooth focus effect
     &:focus {
       border-color: #ED8822; // Change this to your desired color
       box-shadow: 0 0 0 2px rgba(237, 136, 34, 0.2); // Optional: Add a subtle focus shadow
