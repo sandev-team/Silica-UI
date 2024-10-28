@@ -3,7 +3,7 @@ import type { StorybookConfig } from "@storybook/react-vite";
 const config: StorybookConfig = {
   stories: [
     "../src/components/**/__docs__/*.stories.@(tsx)",
-    "../src/**/__docs__/*.mdx"
+    "../src/**/__docs__/*.mdx",
   ],
   addons: [
     "@storybook/addon-onboarding",
@@ -16,8 +16,8 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
-   docs: {   /* add this code */
-    autodocs: true,
+  docs: {
+    /* add this code */ autodocs: true,
   },
 };
 export default config;
