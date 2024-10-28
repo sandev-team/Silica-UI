@@ -7,20 +7,22 @@ export type PasswordInputProps = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
-  size?: "small" | "medium" | "large" | "fill"; // New size prop
+  size?: "small" | "medium" | "large" | "fill";
 };
 
-const Wrapper = styled.div<PasswordInputProps>`
+const Wrapper = styled.div<PasswordInputProps & { isFocused: boolean }>`
   display: flex;
   align-items: center;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${(props) => (props.isFocused ? "#ED8822" : "#e6e6e6")};
   border-radius: 8px;
   padding: 6px 12px;
   background: #fff;
-  width: ${(props) =>
-    props.size === "fill"
-      ? "100%"
-      : "fit-content"}; // Adjust width based on size
+  width: ${(props) => (props.size === "fill" ? "100%" : "fit-content")};
+  box-shadow: ${(props) =>
+    props.isFocused ? "0 0 0 2px rgba(237, 136, 34, 0.2)" : "none"};
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 `;
 
 const Input = styled.input<PasswordInputProps>`
@@ -28,7 +30,7 @@ const Input = styled.input<PasswordInputProps>`
   outline: none;
   font-size: 16px;
   padding: 4px 8px;
-  flex: 1; // Ensures it fills the available space in the wrapper
+  flex: 1;
   width: ${(props) =>
     props.size === "small"
       ? "100px"
@@ -36,7 +38,7 @@ const Input = styled.input<PasswordInputProps>`
         ? "200px"
         : props.size === "large"
           ? "300px"
-          : "100%"}; // Adjust width based on size, but stretch to full width if "fill"
+          : "100%"};
 `;
 
 const ToggleButton = styled.button`
@@ -53,20 +55,23 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   value,
   onChange,
   className,
-  size = "medium", // Default to medium size
+  size = "medium",
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const handleToggle = () => setShowPassword((prev) => !prev);
 
   return (
-    <Wrapper className={className} size={size}>
+    <Wrapper className={className} size={size} isFocused={isFocused}>
       <Input
         type={showPassword ? "text" : "password"}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         size={size}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       />
       <ToggleButton onClick={handleToggle}>
         <FeatherIcon icon={showPassword ? "eye-off" : "eye"} size={20} />
