@@ -1,0 +1,55 @@
+/* Base styles for the fieldset */
+fieldset {
+  border: 1px solid #ccc;
+  /* Default border color */
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 5px;
+  /* Rounded corners */
+}
+
+/* Styles for the legend */
+legend {
+  font-weight: bold;
+  padding: 0 10px;
+  font-size: 1.2em;
+  /* Slightly larger font for the legend */
+}
+
+/* Checkbox label styling */
+label {
+  display: block;
+  /* Each label takes a full line */
+  margin-bottom: 0.5em;
+  /* Spacing between options */
+}
+
+/* Disabled fieldset styling */
+.disabled-fieldset {
+  opacity: 0.5;
+  /* Make the disabled fieldset less prominent */
+  pointer-events: none;
+  /* Prevent interaction with disabled elements */
+}
+
+/* Custom styled fieldset */
+.custom-fieldset {
+  border: 2px dashed #007bff;
+  /* Dashed border for custom styling */
+  background-color: #f8f9fa;
+  /* Light background color */
+}
+
+/* Custom checkbox styling */
+.custom-fieldset input[type="checkbox"] {
+  accent-color: #007bff;
+  /* Custom color for checkboxes */
+}
+
+/* Description paragraph styling */
+.custom-fieldset p {
+  margin: 0 0 1em 0;
+  /* Space below the paragraph */
+  font-style: italic;
+  /* Italicized text for description */
+}
