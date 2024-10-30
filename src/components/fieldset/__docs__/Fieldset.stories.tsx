@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import Fieldset from "../Fieldset"; // Ensure the path is correct
-import "./CustomFieldset.css"; // Import any custom styles if needed
+import "../CustomFieldset.css"; // Import any custom styles if needed
 
 const meta: Meta<typeof Fieldset> = {
   title: "Fieldset",
@@ -21,6 +21,7 @@ type Story = StoryObj<typeof Fieldset>;
 export const Default: Story = {
   args: {
     legend: "Default Fieldset",
+    disable: false,
     children: (
       <>
         <label>
@@ -38,17 +39,18 @@ export const Default: Story = {
 export const Disabled: Story = {
   args: {
     legend: "Disabled Fieldset",
+    disable: true,
     children: (
       <>
         <label>
-          <input type="checkbox" disabled /> Option 1
+          <input type="checkbox" /> Option 1
         </label>
         <label>
-          <input type="checkbox" disabled /> Option 2
+          <input type="checkbox" /> Option 2
         </label>
       </>
     ),
-    className: "disabled-fieldset", // Optional: add a class for styling
+    // className: "disabled-fieldset", // Optional: add a class for styling
   },
 };
 
