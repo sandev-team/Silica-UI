@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
 import styled from "styled-components";
 
 type DatePickerProps = {
   className?: string;
   onChange?: (date: Date) => void;
   disablePastDates?: boolean; // New prop to enable/disable past date selection
+  isButton?: boolean;
+  children?: ReactNode;
 };
 
 const Wrapper = styled.div`
@@ -22,6 +24,25 @@ const Input = styled.input`
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
+  &:focus {
+    border-color: #ed8822;
+    box-shadow: 0 0 0 2px rgba(237, 136, 34, 0.2);
+  }
+`;
+
+const Button = styled.button`
+  padding: 8px;
+  font-size: 16px;
+  width: 200px;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  background-color: white;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  cursor: pointer;
   &:focus {
     border-color: #ed8822;
     box-shadow: 0 0 0 2px rgba(237, 136, 34, 0.2);
@@ -117,6 +138,8 @@ const DatePicker: React.FC<DatePickerProps> = ({
   className,
   onChange,
   disablePastDates = false,
+  isButton = false,
+  children,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -164,98 +187,199 @@ const DatePicker: React.FC<DatePickerProps> = ({
     };
   }, []);
 
-  return (
-    <Wrapper className={className}>
-      <Input
-        type="text"
-        readOnly
-        value={selectedDate ? selectedDate.toLocaleDateString() : ""}
-        onClick={() => setIsOpen(!isOpen)}
-        placeholder="Select a date"
-      />
-      {isOpen && (
-        <Calendar ref={calendarRef}>
-          <Header>
-            <CustomSelect>
-              <SelectButton
-                onClick={() => setIsMonthSelectOpen(!isMonthSelectOpen)}
-              >
-                {new Date(0, month).toLocaleString("default", {
-                  month: "long",
-                })}
-              </SelectButton>
-              <OptionsContainer isVisible={isMonthSelectOpen}>
-                {Array.from({ length: 12 }, (_, i) => (
-                  <Option
-                    key={i}
-                    isSelected={month === i}
-                    onClick={() => handleMonthChange(i)}
-                  >
-                    {new Date(0, i).toLocaleString("default", {
-                      month: "long",
-                    })}
-                  </Option>
-                ))}
-              </OptionsContainer>
-            </CustomSelect>
-            <CustomSelect>
-              <SelectButton
-                onClick={() => setIsYearSelectOpen(!isYearSelectOpen)}
-              >
-                {year}
-              </SelectButton>
-              <OptionsContainer isVisible={isYearSelectOpen}>
-                {Array.from({ length: 10 }, (_, i) => (
-                  <Option
-                    key={i}
-                    isSelected={year === year - 5 + i}
-                    onClick={() => handleYearChange(year - 5 + i)}
-                  >
-                    {year - 5 + i}
-                  </Option>
-                ))}
-              </OptionsContainer>
-            </CustomSelect>
-          </Header>
-          <DaysGrid>
-            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
-              (day, index) => (
-                <div
-                  key={index}
-                  style={{ textAlign: "center", fontWeight: "bold" }}
+  if (isButton) {
+    return (
+      <Wrapper>
+        {isButton && !className ? ( // Only show className if isButton is true and className is empty
+          <Button onClick={() => setIsOpen(!isOpen)} aria-expanded={isOpen}>
+            {children || "Select a date"}
+          </Button>
+        ) : (
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            aria-expanded={isOpen}
+            className={className}
+          >
+            {children || "Select a date"}
+          </button>
+        )}
+        {isOpen && (
+          <Calendar ref={calendarRef}>
+            <Header>
+              <CustomSelect>
+                <SelectButton
+                  onClick={() => setIsMonthSelectOpen(!isMonthSelectOpen)}
                 >
-                  {day}
-                </div>
-              ),
-            )}
-          </DaysGrid>
-          <DaysGrid>
-            {Array.from({ length: firstDayOfMonth }).map((_, index) => (
-              <div key={index}></div>
-            ))}
-            {[...Array(daysInMonth)].map((_, i) => {
-              const day = i + 1;
-              const isPastDate = new Date(year, month, day) < currentDate; // Check if the date is in the past
-              const isToday =
-                new Date(year, month, day).toDateString() ===
-                currentDate.toDateString(); // Check if the date is today
-              const isDisabled = disablePastDates && isPastDate && !isToday; // Apply disable logic based on the prop
-              return (
-                <DateButton
-                  key={i}
-                  isSelected={selectedDate?.getDate() === day}
-                  isDisabled={isDisabled} // Disable button for past dates
-                  onClick={() => !isDisabled && handleDateSelect(day)} // Only call if not a past date
+                  {new Date(0, month).toLocaleString("default", {
+                    month: "long",
+                  })}
+                </SelectButton>
+                <OptionsContainer isVisible={isMonthSelectOpen}>
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <Option
+                      key={i}
+                      isSelected={month === i}
+                      onClick={() => handleMonthChange(i)}
+                    >
+                      {new Date(0, i).toLocaleString("default", {
+                        month: "long",
+                      })}
+                    </Option>
+                  ))}
+                </OptionsContainer>
+              </CustomSelect>
+              <CustomSelect>
+                <SelectButton
+                  onClick={() => setIsYearSelectOpen(!isYearSelectOpen)}
                 >
-                  {day}
-                </DateButton>
-              );
-            })}
-          </DaysGrid>
-        </Calendar>
-      )}
-    </Wrapper>
-  );
+                  {year}
+                </SelectButton>
+                <OptionsContainer isVisible={isYearSelectOpen}>
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <Option
+                      key={i}
+                      isSelected={year === year - 5 + i}
+                      onClick={() => handleYearChange(year - 5 + i)}
+                    >
+                      {year - 5 + i}
+                    </Option>
+                  ))}
+                </OptionsContainer>
+              </CustomSelect>
+            </Header>
+            <DaysGrid>
+              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                (day, index) => (
+                  <div
+                    key={index}
+                    style={{ textAlign: "center", fontWeight: "bold" }}
+                  >
+                    {day}
+                  </div>
+                ),
+              )}
+            </DaysGrid>
+            <DaysGrid>
+              {Array.from({ length: firstDayOfMonth }).map((_, index) => (
+                <div key={index}></div>
+              ))}
+              {[...Array(daysInMonth)].map((_, i) => {
+                const day = i + 1;
+                const isPastDate = new Date(year, month, day) < currentDate; // Check if the date is in the past
+                const isToday =
+                  new Date(year, month, day).toDateString() ===
+                  currentDate.toDateString(); // Check if the date is today
+                const isDisabled = disablePastDates && isPastDate && !isToday; // Apply disable logic based on the prop
+                return (
+                  <DateButton
+                    key={i}
+                    isSelected={selectedDate?.getDate() === day}
+                    isDisabled={isDisabled} // Disable button for past dates
+                    onClick={() => !isDisabled && handleDateSelect(day)} // Only call if not a past date
+                  >
+                    {day}
+                  </DateButton>
+                );
+              })}
+            </DaysGrid>
+          </Calendar>
+        )}
+      </Wrapper>
+    );
+  } else {
+    return (
+      <Wrapper className={className}>
+        <Input
+          type="text"
+          readOnly
+          value={selectedDate ? selectedDate.toLocaleDateString() : ""}
+          onClick={() => setIsOpen(!isOpen)}
+          placeholder="Select a date"
+        />
+        {isOpen && (
+          <Calendar ref={calendarRef}>
+            <Header>
+              <CustomSelect>
+                <SelectButton
+                  onClick={() => setIsMonthSelectOpen(!isMonthSelectOpen)}
+                >
+                  {new Date(0, month).toLocaleString("default", {
+                    month: "long",
+                  })}
+                </SelectButton>
+                <OptionsContainer isVisible={isMonthSelectOpen}>
+                  {Array.from({ length: 12 }, (_, i) => (
+                    <Option
+                      key={i}
+                      isSelected={month === i}
+                      onClick={() => handleMonthChange(i)}
+                    >
+                      {new Date(0, i).toLocaleString("default", {
+                        month: "long",
+                      })}
+                    </Option>
+                  ))}
+                </OptionsContainer>
+              </CustomSelect>
+              <CustomSelect>
+                <SelectButton
+                  onClick={() => setIsYearSelectOpen(!isYearSelectOpen)}
+                >
+                  {year}
+                </SelectButton>
+                <OptionsContainer isVisible={isYearSelectOpen}>
+                  {Array.from({ length: 10 }, (_, i) => (
+                    <Option
+                      key={i}
+                      isSelected={year === year - 5 + i}
+                      onClick={() => handleYearChange(year - 5 + i)}
+                    >
+                      {year - 5 + i}
+                    </Option>
+                  ))}
+                </OptionsContainer>
+              </CustomSelect>
+            </Header>
+            <DaysGrid>
+              {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
+                (day, index) => (
+                  <div
+                    key={index}
+                    style={{ textAlign: "center", fontWeight: "bold" }}
+                  >
+                    {day}
+                  </div>
+                ),
+              )}
+            </DaysGrid>
+            <DaysGrid>
+              {Array.from({ length: firstDayOfMonth }).map((_, index) => (
+                <div key={index}></div>
+              ))}
+              {[...Array(daysInMonth)].map((_, i) => {
+                const day = i + 1;
+                const isPastDate = new Date(year, month, day) < currentDate; // Check if the date is in the past
+                const isToday =
+                  new Date(year, month, day).toDateString() ===
+                  currentDate.toDateString(); // Check if the date is today
+                const isDisabled = disablePastDates && isPastDate && !isToday; // Apply disable logic based on the prop
+                return (
+                  <DateButton
+                    key={i}
+                    isSelected={selectedDate?.getDate() === day}
+                    isDisabled={isDisabled} // Disable button for past dates
+                    onClick={() => !isDisabled && handleDateSelect(day)} // Only call if not a past date
+                  >
+                    {day}
+                  </DateButton>
+                );
+              })}
+            </DaysGrid>
+          </Calendar>
+        )}
+      </Wrapper>
+    );
+  }
 };
 
 export default DatePicker;
