@@ -1,13 +1,11 @@
 import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
-import FeatherIcon from "feather-icons-react";
 
 export type ButtonProps = {
-  text?: string;
+  children?: React.ReactNode; // Use children instead of text
   primary?: boolean;
-  icon?: string;
   size?: "small" | "medium" | "large" | "full"; // Added 'full' size option
-  justifyContent?: "left" | "center" | "right";
+  justify?: "left" | "center" | "right";
   onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string; // Allow users to pass in their own className
 };
@@ -21,7 +19,7 @@ const StyledButton = styled.button<ButtonProps>`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: ${props.justifyContent};
+    justify-content: ${props.justify};
     gap: 8px;
     line-height: 1;
     font-size: ${
@@ -65,8 +63,7 @@ const StyledButton = styled.button<ButtonProps>`
 const Button: React.FC<ButtonProps> = ({
   size,
   primary,
-  icon,
-  text,
+  children, // Use children prop
   onClick,
   className,
   ...props
@@ -80,21 +77,7 @@ const Button: React.FC<ButtonProps> = ({
       className={className} // Pass the className down
       {...props}
     >
-      {icon ? (
-        <FeatherIcon
-          icon={icon}
-          size={
-            size === "small"
-              ? "16px"
-              : size === "medium"
-                ? "20px"
-                : size === "large"
-                  ? "24px"
-                  : "20px"
-          }
-        />
-      ) : null}
-      {text}
+      {children} {/* Render children instead of text */}
     </StyledButton>
   );
 };

@@ -1,9 +1,12 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import Example from "./Example";
+import Button from "../Button";
+import FeatherIcon from "feather-icons-react";
+import "./Button.css";
 
-const meta: Meta<typeof Example> = {
+const meta: Meta<typeof Button> = {
   title: "Button",
-  component: Example,
+  component: Button,
   tags: ["autodoc"],
   parameters: {
     docs: {
@@ -13,23 +16,26 @@ const meta: Meta<typeof Example> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Example>;
+type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    text: "Button",
-    icon: "",
+    children: "Button", // Updated to use children instead of text
     primary: true,
     size: "small",
-    justifyContent: "center",
+    justify: "center",
     onClick: () => console.log("Button clicked"),
   },
 };
 
-export const PrimaryWithIcon: Story = {
+export const PrimaryWithChildren: Story = {
   args: {
-    text: "New Draft",
-    icon: "plus",
+    children: (
+      <>
+        <FeatherIcon icon={"plus"} size={16} />
+        <span>New Draft</span>
+      </>
+    ), // You can use any JSX as children
     primary: true,
     size: "small",
     onClick: () => console.log("Button clicked"),
@@ -38,18 +44,21 @@ export const PrimaryWithIcon: Story = {
 
 export const Secondary: Story = {
   args: {
-    text: "Button",
-    icon: "",
+    children: "Button", // Updated to use children instead of text
     primary: false,
     size: "small",
     onClick: () => console.log("Button clicked"),
   },
 };
 
-export const SecondaryWithIcon: Story = {
+export const SecondaryWithChildren: Story = {
   args: {
-    text: "Copy",
-    icon: "clipboard",
+    children: (
+      <>
+        <FeatherIcon icon={"clipboard"} size={16} />
+        <span>Copy</span>
+      </>
+    ), // You can use any JSX as children
     primary: false,
     size: "small",
     onClick: () => console.log("Button clicked"),
@@ -58,16 +67,17 @@ export const SecondaryWithIcon: Story = {
 
 export const FullSize: Story = {
   args: {
-    text: "Full Width Button",
+    children: "Full Width Button", // Updated to use children instead of text
     primary: true,
     size: "full",
+    justify: "center",
     onClick: () => console.log("Full button clicked"),
   },
 };
 
 export const Large: Story = {
   args: {
-    text: "Large Button",
+    children: "Large Button", // Updated to use children instead of text
     primary: true,
     size: "large",
     onClick: () => console.log("Large button clicked"),
@@ -76,7 +86,7 @@ export const Large: Story = {
 
 export const CustomStyle: Story = {
   args: {
-    text: "Styled Button",
+    children: "Styled Button", // Updated to use children instead of text
     className: "custom-button-class",
     primary: false,
     size: "medium",

@@ -1,0 +1,35 @@
+.custom-button-class {
+  border: none;
+  /* Remove default border */
+  border-radius: 8px;
+  /* Rounded corners */
+  background-color: #4CAF50;
+  /* Green background */
+  color: white;
+  /* White text */
+  padding: 10px 20px;
+  /* Vertical and horizontal padding */
+  font-size: 16px;
+  /* Font size */
+  font-weight: bold;
+  /* Bold text */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  /* Smooth transitions */
+
+  /* Add some box shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover effect */
+.custom-button-class:hover {
+  background-color: #45a049;
+  /* Darker green on hover */
+}
+
+/* Active effect */
+.custom-button-class:active {
+  transform: scale(0.98);
+  /* Slightly scale down */
+}
