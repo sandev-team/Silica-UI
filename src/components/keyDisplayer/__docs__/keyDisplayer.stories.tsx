@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import KeyDisplayer from "../keyDisplayer";
 
 const meta: Meta<typeof KeyDisplayer> = {
-  title: "KeyDisplayer",
+  title: "Key Displayer",
   component: KeyDisplayer,
   tags: ["autodoc"],
   parameters: {

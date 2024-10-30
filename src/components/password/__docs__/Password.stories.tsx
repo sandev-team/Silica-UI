@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Example from "./Example";
 
 const meta: Meta<typeof Example> = {
-  title: "PasswordInput",
+  title: "Password Input",
   component: Example,
   tags: ["autodoc"],
   parameters: {
