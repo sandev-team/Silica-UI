@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
 
 export type NavProps = {
@@ -75,18 +75,50 @@ const StyledNavActions = styled.div`
 `;
 
 const Nav: React.FC<NavProps> = ({ children, className }) => {
+  const inspectChild = (child: React.ReactNode) => {
+    if (React.isValidElement(child)) {
+      const childType = child.type;
+
+      if (typeof childType === "string") {
+        console.log("Found HTML element:", childType); // e.g., "div", "a"
+      } else if (childType === Fragment) {
+        console.log("Found React.Fragment");
+        // If Fragment, recursively inspect its children
+        React.Children.forEach(child.props.children, inspectChild);
+      } else if ((childType as React.ComponentType).displayName) {
+        const displayName = (childType as React.ComponentType).displayName;
+
+        if (displayName === "NavLogo") {
+          console.log("Found NavLogo component");
+        } else if (displayName === "NavLinks") {
+          console.log("Found NavLinks component");
+        } else if (displayName === "NavActions") {
+          console.log("Found NavActions component");
+        }
+      }
+    }
+  };
+
+  React.Children.forEach(children, inspectChild);
+
   return <StyledNav className={className}>{children}</StyledNav>;
 };
-
 export const NavLogo: React.FC<NavProps> = ({ children, className }) => (
   <StyledNavLogo className={className}>{children}</StyledNavLogo>
 );
+NavLogo.displayName = "NavLogo";
 
 export const NavLinks: React.FC<NavProps> = ({ children, className }) => (
   <StyledNavLinks className={className}>{children}</StyledNavLinks>
 );
+NavLinks.displayName = "NavLinks";
 
 export const NavActions: React.FC<NavProps> = ({ children, className }) => (
+  <StyledNavActions className={className}>{children}</StyledNavActions>
+);
+NavActions.displayName = "NavActions";
+
+export const NavMenus: React.FC<NavProps> = ({ children, className }) => (
   <StyledNavActions className={className}>{children}</StyledNavActions>
 );
 
