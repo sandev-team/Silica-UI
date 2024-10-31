@@ -1,7 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import Nav from "../Nav";
-import FeatherIcon from "feather-icons-react";
+import Nav, { NavLogo, NavActions, NavLinks } from "../Nav";
 import { Button } from "../../button";
 
 const meta: Meta<typeof Nav> = {
@@ -20,55 +19,36 @@ type Story = StoryObj<typeof Nav>;
 
 export const Basic: Story = {
   args: {
-    logo: <span>MyApp</span>,
-    links: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Services", href: "/services" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-};
-
-export const WithIconsAndActions: Story = {
-  args: {
-    logo: <span>MyApp</span>,
-    links: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Services", href: "/services" },
-      { label: "Contact", href: "/contact" },
-    ],
     children: (
-      <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-        <FeatherIcon icon={"moon"} size={16} />
-        <Button primary={true}>Sign in</Button>
-      </div>
+      <>
+        <NavLogo>Logo</NavLogo>
+
+        <NavLinks>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </NavLinks>
+      </>
     ),
   },
 };
 
-export const CustomStyles: Story = {
-  name: "Custom Styles and Elements",
+export const WithLogoAndActions: Story = {
   args: {
-    logo: <span style={{ color: "#ED8822" }}>StyledApp</span>,
-    links: [
-      { label: "Home", href: "/" },
-      { label: "Features", href: "/features" },
-      { label: "Pricing", href: "/pricing" },
-    ],
     children: (
-      <button
-        style={{
-          padding: "8px 16px",
-          backgroundColor: "#555",
-          color: "#fff",
-          borderRadius: "4px",
-        }}
-      >
-        Get Started
-      </button>
+      <>
+        <NavLogo>Logo</NavLogo>
+
+        <NavLinks>
+          <a href="#home">Home</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </NavLinks>
+
+        <NavActions>
+          <Button>Dashboard</Button>
+        </NavActions>
+      </>
     ),
-    className: "custom-nav",
   },
 };
