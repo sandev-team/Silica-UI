@@ -46,8 +46,11 @@ export const WithLogoAndActions: Story = {
         </NavLinks>
 
         <NavActions>
-          <Button size="small" primary>
+          <Button size="small" justify="center" primary>
             Dashboard
+          </Button>
+          <Button size="small" justify="center">
+            Sign out
           </Button>
         </NavActions>
       </>
